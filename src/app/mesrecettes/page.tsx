@@ -3,6 +3,7 @@
 import React from 'react'
 import { useSession, signIn } from 'next-auth/react'
 import CardRecette from '../components/CardRecette'
+import Link from 'next/link'
 
 export default function PageRecettes() {
   const { data: session, status } = useSession()
@@ -42,6 +43,12 @@ export default function PageRecettes() {
           </button>
         </div>
       )}
+         <Link
+          href="/"
+          className="mx-auto border text-xs text-center border-orangevid mt-5 bg-base w-[160] py-1 rounded-md shadow-md shadow-brunclair text-black hover:bg-orangevid hover:text-white active:shadow-none cursor-pointer"
+        >
+          Retour à l'accueil
+        </Link>
     </div>
   )
 }

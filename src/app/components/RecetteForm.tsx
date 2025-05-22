@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import {  signIn, useSession } from 'next-auth/react'
 import axios from 'axios'
+import Link from 'next/link'
 
 export default function RecetteForm() {
   const { data: session } = useSession()
@@ -21,7 +22,6 @@ export default function RecetteForm() {
       })
       setRecette(response.data.recipe)
     } catch (err) {
-      console.error('[❌ Erreur]', err)
       setRecette("Une erreur s'est produite.")
     } finally {
       setLoading(false)
@@ -37,14 +37,13 @@ export default function RecetteForm() {
       })
       alert('Recette enregistrée ✅')
     } catch (err) {
-      console.error('[❌ Enregistrement échoué]', err)
       alert('Erreur lors de l’enregistrement.')
     }
   }
 
   return (
     <div className='mx-2 md:mx-24 text-center md:text-left md:mt-24 mt-2'>
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-4 flex flex-col items-center justify-center">
         <label className="block text-lg font-bold">
           Ingrédients (séparés par des virgules) :
         </label>
@@ -52,12 +51,12 @@ export default function RecetteForm() {
           type="text"
           value={ingredients}
           onChange={(e) => setIngredients(e.target.value)}
-          className="w-full p-2 border border-gray-300 rounded"
+          className="w-full md:w-1/2 p-2 border border-gray-300 rounded"
           placeholder="ex: tomates, poisson, ail"
         />
         <button
           type="submit"
-          className="border border-bluedark bg-vertclair w-[260] py-1 rounded-md shadow-md text-black hover:bg-orangevid hover:text-white active:shadow-none"
+          className="cursor-pointer border border-bluedark bg-vertclair w-[260] py-1 rounded-md shadow-md text-black hover:bg-orangevid hover:text-white active:shadow-none"
           disabled={loading}
         >
           {loading ? 'Génération...' : 'Générer une recette'}
@@ -65,27 +64,28 @@ export default function RecetteForm() {
       </form>
 
       {recette && (
-        <div className="mt-8">
-          <h2 className="text-xl font-semibold mb-2">Recette générée :</h2>
-          <p className='border mx-3 md:mx-50 bg-vertclair p-6 rounded-md shadow-xl'>{recette}</p>
-
+        <div className="mt-2 justify-center items-center flex flex-col">
           {session ? (
             <button
               onClick={handleSave}
-              className="mt-4 bg-orangevid text-white px-4 py-2 rounded hover:bg-orange-600"
+              className="cursor-pointer mt-4 bg-orangevid text-white px-4 py-2 rounded hover:bg-orange-600"
             >
               Enregistrer la recette
             </button>
           ) : (
             <button
               onClick={() => signIn()}
-              className="mt-4 bg-slate-400 text-white px-4 py-2 rounded hover:bg-slate-600"
+              className="cursor-pointer border border-orangevid my-2 md:my-6 bg-base w-[200] px-2 py-1 rounded-md shadow-md shadow-brunclair text-black hover:bg-orangevid hover:text-white active:shadow-none cursor-pointer"
             >
               Se connecter pour enregistrer
             </button>
           )}
+          <h2 className="text-xl font-semibold my-2 md:mb-12">Recette générée :</h2>
+          <p className='border mx-3 md:mx-50 bg-vertclair p-6 rounded-md shadow-xl'>{recette}</p>
+
         </div>
       )}
+   
     </div>
   )
 }
