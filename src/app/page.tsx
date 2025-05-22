@@ -6,7 +6,7 @@ export default function Home() {
     <div>
       <div className="bg-white border border-orangevid rounded-xl min-h-screen m-3 md:m-12 flex flex-col">
         <div className="">
-          <h1 className="text-center text-6xl mt-5 md:mt-18 text-brunclair">Vid'Frigo</h1>
+          <h1 className="text-center text-6xl mt-5 md:mt-18 text-brunclair">{`Vid'Frigo`}</h1>
         </div>
         <div className="flex flex-col md:flex-row justify-center items-center p-4 mt-6 md:mt-14 gap-5 md:gap-24">
         <Link href="/connexion">
@@ -25,8 +25,8 @@ export default function Home() {
           </Link>
         </div>
         <div className="bg-vertclair rounded-xl p-4 md:p-8 m-3 mt-12 md:mx-64 md:m-12 mt-6 md:mt-24 shadow-xl shadow-brunclair">
-          <p className="text-center md:text-xl"><span className="font-bold">“Frigo vide ? Challenge accepté !”</span> <br /> <br />
-            Tape ce qu’il te reste au fond du frigo, on te sort une recette digne d’un chef… <br />
+          <p className="text-center md:text-xl"><span className="font-bold">{`“Frigo vide ? Challenge accepté !”`}</span> <br /> <br />
+           {` Tape ce qu’il te reste au fond du frigo, on te sort une recette digne d’un chef… `}<br />
             ou presque. Moins de galère, plus de saveur, et zéro excuse pour commander des nouilles encore une fois !</p>
         </div>
       </div>

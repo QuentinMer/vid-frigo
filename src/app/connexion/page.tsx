@@ -32,6 +32,8 @@ const Page = () => {
       }
     } catch (err) {
       setError('Erreur lors de la connexion.')
+      console.log(err);
+      
     }
   }
 
@@ -81,7 +83,7 @@ const Page = () => {
           href="/"
           className="border text-xs text-center border-orangevid mt-5 bg-base w-[140] py-1 rounded-md shadow-md shadow-brunclair text-black hover:bg-orangevid hover:text-white active:shadow-none cursor-pointer"
         >
-          Retour à l'accueil
+          {`Retour à l'accueil`}
         </Link>
       </div>
     </div>

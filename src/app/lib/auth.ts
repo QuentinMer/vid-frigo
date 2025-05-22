@@ -12,8 +12,10 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials) {
         const user = { id: "1", name: "Carlos", email: "test@example.com" }
+        console.log(credentials);
         return user
       },
+      
     }),
   ],
   session: {

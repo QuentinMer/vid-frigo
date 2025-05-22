@@ -47,7 +47,7 @@ export default function PageRecettes() {
           href="/"
           className="mx-auto border text-xs text-center border-orangevid mt-5 bg-base w-[160] py-1 rounded-md shadow-md shadow-brunclair text-black hover:bg-orangevid hover:text-white active:shadow-none cursor-pointer"
         >
-          Retour à l'accueil
+          {`Retour à l'accueil`}
         </Link>
     </div>
   )

@@ -3,7 +3,6 @@
 import { useState } from 'react'
 import {  signIn, useSession } from 'next-auth/react'
 import axios from 'axios'
-import Link from 'next/link'
 
 export default function RecetteForm() {
   const { data: session } = useSession()
@@ -23,6 +22,8 @@ export default function RecetteForm() {
       setRecette(response.data.recipe)
     } catch (err) {
       setRecette("Une erreur s'est produite.")
+      console.log(err);
+      
     } finally {
       setLoading(false)
     }
@@ -34,10 +35,14 @@ export default function RecetteForm() {
     try {
       const response = await axios.post('/api/save-recipe', {
         recipe: recette,
+        
       })
-      alert('Recette enregistrée ✅')
+      console.log(response);
+      alert('Recette enregistrée ')
     } catch (err) {
       alert('Erreur lors de l’enregistrement.')
+      console.log(err);
+      
     }
   }
 
