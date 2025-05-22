@@ -11,7 +11,7 @@ export async function POST(req: Request) {
     const prompt = `Crée une recette avec les ingrédients suivants en français : ${ingredients.join(', ')}`
     console.log('[PROMPT]:', prompt)
 
-    // Écrire le prompt dans un fichier temporaire
+  
     const tmpPath = path.join(os.tmpdir(), `prompt-${Date.now()}.txt`)
     fs.writeFileSync(tmpPath, prompt)
 
@@ -38,21 +38,21 @@ export async function POST(req: Request) {
       })
 
       child.on('close', (code) => {
-        fs.unlinkSync(tmpPath) // nettoyage du fichier temporaire
+        fs.unlinkSync(tmpPath) 
 
         if (code !== 0) {
-          console.error('[❌ ERREUR]:', errorOutput)
+          console.error('[ERREUR]:', errorOutput)
           return resolve(
             NextResponse.json({ recipe: null, error: `Code ${code}` }, { status: 500 })
           )
         }
 
-        console.log('[✅ RECETTE]:', output.trim())
+        console.log('[RECETTE]:', output.trim())
         resolve(NextResponse.json({ recipe: output.trim() }))
       })
     })
   } catch (err) {
-    console.error('[❌ ERREUR API]:', err)
+    console.error('[ERREUR API]:', err)
     return NextResponse.json({ recipe: null, error: 'Erreur serveur' }, { status: 500 })
   }
 }

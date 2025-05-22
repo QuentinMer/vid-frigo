@@ -1,31 +1,91 @@
-import Link from 'next/link'
-import React from 'react'
+'use client'
 
-const page = () => {
+import React from 'react'
+import { useRouter } from 'next/navigation'
+import Link from 'next/link'
+
+const Page = () => {
+  const router = useRouter()
+  const [email, setEmail] = React.useState('')
+  const [password, setPassword] = React.useState('')
+  const [error, setError] = React.useState('')
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    try {
+      const response = await fetch('http://127.0.0.1:8000/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      })
+
+      const data = await response.json()
+
+      if (response.ok) {
+        localStorage.setItem('token', data.token)
+        router.push('/recettes') // Redirection si login réussi
+      } else {
+        setError(data.message || 'Identifiants incorrects')
+      }
+    } catch (err) {
+      setError('Erreur lors de la connexion.')
+    }
+  }
+
   return (
     <div>
-
-        <h1 className='mt-12 text-center text-xl md:text-2xl bg-vertclair md:mx-24 mx-2 md:mt-48 p-2 rounded-md shadow shadow-brunclair'>Connexion à votre compte</h1>
-    <div className='border border-bluedark flex flex-col justify-center items-center bg-vertclair mx-5 md:mx-180 mt-12 md:mt-34 rounded-md shadow-md shadow-brunclair text-black p-5'>
-      <form className='flex flex-col gap-5 items-center' action="/connexion" method="POST">
-        <div className='flex flex-row justify-between w-full'>
-          <label htmlFor="email">Email:</label>
-          <input className='bg-base ms-2 rounded-md px-1' type="email" id="email" name="email" required />
-        </div>
-        <div className='flex flex-row justify-between w-full'>
-          <label htmlFor="password">mot de passe:</label>
-          <input className='bg-base ms-2 rounded-md px-1' type="password" id="password" name="password" required />
-        </div>
-        <button className="border border-orangevid mt-5 bg-base w-[160] py-1 rounded-md shadow-md shadow-brunclair text-black hover:bg-orangevid hover:text-white active:shadow-none cursor-pointer"
-          type="submit">se connecter</button>
-      </form>
+      <h1 className="mt-12 text-center text-xl md:text-2xl bg-vertclair md:mx-24 mx-2 md:mt-48 p-2 rounded-md shadow shadow-brunclair">
+        Connexion à votre compte
+      </h1>
+      <div className="border border-bluedark flex flex-col justify-center items-center bg-vertclair mx-5 md:mx-180 mt-12 md:mt-34 rounded-md shadow-md shadow-brunclair text-black p-5">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-5 items-center">
+          <div className="flex flex-row justify-between w-full">
+            <label htmlFor="email">Email:</label>
+            <input
+              className="bg-base ms-2 rounded-md px-1"
+              type="email"
+              id="email"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              required
+            />
           </div>
-          <div className='flex flex-col justify-center items-center w-full mt-5'>
-          <Link className='text-center text-sm mt-5 text-black my-4' href="/inscription">Pas encore de compte ? <span className='text-blue-800 hover:text-orangevid'>Inscrivez-vous ici !</span></Link>
-          <Link className='border text-xs text-center border-orangevid mt-5 bg-base w-[140] py-1 rounded-md shadow-md shadow-brunclair text-black hover:bg-orangevid hover:text-white active:shadow-none cursor-pointer' href="/">Retour à l'accueil</Link>
+          <div className="flex flex-row justify-between w-full">
+            <label htmlFor="password">Mot de passe:</label>
+            <input
+              className="bg-base ms-2 rounded-md px-1"
+              type="password"
+              id="password"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              required
+            />
           </div>
+          <button
+            type="submit"
+            className="border border-orangevid mt-5 bg-base w-[160] py-1 rounded-md shadow-md shadow-brunclair text-black hover:bg-orangevid hover:text-white active:shadow-none cursor-pointer"
+          >
+            Se connecter
+          </button>
+        </form>
+        {error && <p className="text-red-600 mt-4">{error}</p>}
+      </div>
+      <div className="flex flex-col justify-center items-center w-full mt-5">
+        <Link href="/inscription" className="text-center text-sm mt-5 text-black my-4">
+          Pas encore de compte ? <span className="text-blue-800 hover:text-orangevid">Inscrivez-vous ici !</span>
+        </Link>
+        <Link
+          href="/"
+          className="border text-xs text-center border-orangevid mt-5 bg-base w-[140] py-1 rounded-md shadow-md shadow-brunclair text-black hover:bg-orangevid hover:text-white active:shadow-none cursor-pointer"
+        >
+          Retour à l'accueil
+        </Link>
+      </div>
     </div>
   )
 }
 
-export default page
+export default Page

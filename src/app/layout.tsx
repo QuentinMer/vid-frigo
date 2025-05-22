@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "./components/Navbar";
-
+import Providers from "./providers";
 
 export const metadata: Metadata = {
   title: "Vid'Frigo",
@@ -16,8 +16,10 @@ export default function RootLayout({
   return (
     <html lang="fr">
       <body className="font-oswald">
+        <Providers>
         <Navbar/>
         {children}
+        </Providers>
       </body>
     </html>
   );
