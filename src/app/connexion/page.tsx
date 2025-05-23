@@ -23,10 +23,14 @@ const Page = () => {
       })
 
       const data = await response.json()
+      console.log("Réponse complète de l'API :", data);
+
 
       if (response.ok) {
+        console.log("Token reçu :", data.token);
         localStorage.setItem('token', data.token)
-        router.push('/recettes') // Redirection si login réussi
+        console.log("Token stocké :", localStorage.getItem("token"));
+        router.push('/recette') // Redirection si login réussi
       } else {
         setError(data.message || 'Identifiants incorrects')
       }
