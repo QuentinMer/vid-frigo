@@ -2,8 +2,11 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 
 export default function RegisterPage() {
+  const router = useRouter()
+
   const [form, setForm] = useState({
     name: '',
     email: '',
@@ -26,7 +29,7 @@ export default function RegisterPage() {
     }
 
     try {
-      const res = await fetch('http://localhost:8000/api/signup', {
+      const res = await fetch('http://localhost:8000/api/auth/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -42,6 +45,7 @@ export default function RegisterPage() {
       } else {
         setMessage('Inscription réussie !')
         setForm({ name: '', email: '', password: '', confirmPassword: '' })
+        router.push('/connexion')
       }
     } catch (err) {
       setMessage('Erreur réseau')
@@ -52,10 +56,10 @@ export default function RegisterPage() {
 
   return (
     <div>
-      <h1 className='mt-12 text-center text-xl md:text-2xl bg-vertclair md:mx-24 mx-2 md:mt-48 p-2 rounded-md shadow shadow-brunclair'>
+      <h1 className='mt-12 text-center text-xl md:text-2xl bg-vertclair md:mx-24 mx-2 md:mt-24 xl:mt-40 p-2 rounded-md shadow shadow-brunclair'>
         {`Créez votre compte Vid'frigo`}
       </h1>
-      <div className='border border-bluedark flex flex-col justify-center items-center bg-vertclair mx-5 md:mx-140 mt-12 md:mt-34 rounded-md shadow-md shadow-brunclair text-black p-5'>
+      <div className='border border-bluedark flex flex-col justify-center items-center bg-vertclair mx-5 md:mx-60 xl:mx-100 mt-12 md:mt-24 xl:mt-24 rounded-md shadow-md shadow-brunclair text-black p-5'>
         <form onSubmit={handleSubmit} className='flex flex-col gap-5 items-center w-full max-w-md'>
           <div className='flex flex-row justify-between w-full'>
             <label htmlFor="name">Nom:</label>

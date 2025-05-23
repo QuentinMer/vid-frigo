@@ -23,10 +23,14 @@ const Page = () => {
       })
 
       const data = await response.json()
+      console.log("Réponse complète de l'API :", data);
+
 
       if (response.ok) {
+        console.log("Token reçu :", data.token);
         localStorage.setItem('token', data.token)
-        router.push('/recettes') // Redirection si login réussi
+        console.log("Token stocké :", localStorage.getItem("token"));
+        router.push('/recette') // Redirection si login réussi
       } else {
         setError(data.message || 'Identifiants incorrects')
       }
@@ -37,12 +41,13 @@ const Page = () => {
     }
   }
 
+
   return (
     <div>
-      <h1 className="mt-12 text-center text-xl md:text-2xl bg-vertclair md:mx-24 mx-2 md:mt-48 p-2 rounded-md shadow shadow-brunclair">
+      <h1 className="mt-12 text-center text-xl md:text-2xl bg-vertclair md:mx-24 mx-2 md:mt-12 xl:mt-40 p-2 rounded-md shadow shadow-brunclair">
         Connexion à votre compte
       </h1>
-      <div className="border border-bluedark flex flex-col justify-center items-center bg-vertclair mx-5 md:mx-180 mt-12 md:mt-34 rounded-md shadow-md shadow-brunclair text-black p-5">
+      <div className="border border-bluedark flex flex-col justify-center items-center bg-vertclair mx-5 md:mx-60 xl:mx-120 mt-12 md:mt-24 xl:mt-24 rounded-md shadow-md shadow-brunclair text-black p-5">
         <form onSubmit={handleSubmit} className="flex flex-col gap-5 items-center">
           <div className="flex flex-row justify-between w-full">
             <label htmlFor="email">Email:</label>
